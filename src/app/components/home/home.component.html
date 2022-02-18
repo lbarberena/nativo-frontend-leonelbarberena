@@ -1,0 +1,43 @@
+<div class="card home-content">
+    <div class="card-body">
+  
+      <div style="text-align: center; color: #3169D4">
+        <h1>
+          Find by ZIP Code
+        </h1>
+      </div>
+  
+        <div class="form-group">
+          <label class="label">Zip Code: *</label>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+          <input type="text"
+            placeholder="Pick one"
+            aria-label="Number"
+            matInput
+            class="form-control"
+            [formControl]="zipCode"
+            [matAutocomplete]="auto">
+          <ng-container *ngIf="zipCode.invalid && zipCode.touched">
+            <p class="caption status-danger" *ngIf="zipCode.errors?.['required']">
+              The zip code is required
+            </p>
+          </ng-container>
+        </div>
+  
+      <br>
+  
+      <div class="text-center image-block">
+        <button type="button" class="btn btn-primary" [disabled]="zipCode.invalid" (click)="findByZipCode()">View</button>
+      </div>
+      <br>
+  
+    </div>
+</div>
+
+<div>
+  <app-zip-codes [zipCode]="selectedZipCode.asObservable()"></app-zip-codes>
+</div>
